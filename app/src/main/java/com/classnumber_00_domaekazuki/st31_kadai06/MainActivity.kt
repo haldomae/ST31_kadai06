@@ -25,21 +25,23 @@ class MainActivity : AppCompatActivity() {
         val listView: ListView = findViewById(R.id.listView)
         // 果物データのリストを作成（Map形式）
         val ListData = arrayListOf(
-            mapOf("name" to "モンスター1", "image" to R.drawable.img1,"from" to "HAL東京30F"),
-            mapOf("name" to "モンスター2", "image" to R.drawable.img2,"from" to "HAL東京29F"),
-            mapOf("name" to "モンスター3", "image" to R.drawable.img3,"from" to "HAL東京28F"),
-            mapOf("name" to "モンスター4", "image" to R.drawable.img4,"from" to "HAL東京27F"),
-            mapOf("name" to "モンスター5", "image" to R.drawable.img5,"from" to "HAL東京26F"),
+            ListData("モンスター1", R.drawable.img1,"HAL東京30F"),
+            ListData("モンスター2", R.drawable.img2,"HAL東京29F"),
+            ListData("モンスター3", R.drawable.img3,"HAL東京28F"),
+            ListData("モンスター4", R.drawable.img4,"HAL東京27F"),
+            ListData("モンスター5", R.drawable.img5,"HAL東京26F"),
         )
 
         // ArrayAdapterを作成
-        val adapter = SimpleAdapter(
-            this,// コンテキスト
-            ListData,
-            R.layout.list_item,     // 標準のリスト項目レイアウト
-            arrayOf("image", "name", "from"),              // データのキー
-            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)  // 対応するView ID
-        )
+//        val adapter = SimpleAdapter(
+//            this,// コンテキスト
+//            ListData,
+//            R.layout.list_item,     // 標準のリスト項目レイアウト
+//            arrayOf("image", "name", "from"),              // データのキー
+//            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)  // 対応するView ID
+//        )
+
+        val adapter = CustomAdapter(this, ListData)
 
         // ListViewにAdapterを設定
         listView.adapter = adapter
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             val positionData = ListData[position]
             Toast.makeText(
                 this,
-                "選択されたモンスター: ${positionData["name"]}",
+                "選択されたモンスター: ${positionData.name}",
                 Toast.LENGTH_SHORT
             ).show()
         }
