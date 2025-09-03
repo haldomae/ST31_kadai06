@@ -3,6 +3,7 @@ package com.classnumber_00_domaekazuki.st31_kadai06
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.SimpleAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,21 +25,34 @@ class MainActivity : AppCompatActivity() {
         val list: ListView = findViewById(R.id.listview)
 
         // 表示するデータ
-        val fruits = arrayOf(
-            "りんご",
-            "バナナ",
-            "オレンジ",
-            "いちご",
-            "ぶどう",
-            "パイナップル",
+        val monsterData = arrayListOf(
+            mapOf("name" to "モンスター1",
+                "image" to R.drawable.img1),
+            mapOf("name" to "モンスター2",
+                "image" to R.drawable.img2),
+            mapOf("name" to "モンスター3",
+                "image" to R.drawable.img3),
+            mapOf("name" to "モンスター4",
+                "image" to R.drawable.img4),
+            mapOf("name" to "モンスター5",
+                "image" to R.drawable.img5),
+            mapOf("name" to "モンスター6",
+                "image" to R.drawable.img6),
         )
 
         // Adapter
         // Adapterはリストとデータを仲介してくれるもの
-        val adapter = ArrayAdapter(
-            this, // コンテキスト(画面情報、どこの画面に表示するか)
-            android.R.layout.simple_list_item_1, // 項目のレイアウト
-            fruits // 表示するデータ
+//        val adapter = ArrayAdapter(
+//            this, // コンテキスト(画面情報、どこの画面に表示するか)
+//            android.R.layout.simple_list_item_1, // 項目のレイアウト
+//            fruits // 表示するデータ
+//        )
+        val adapter = SimpleAdapter(
+            this, // コンテキスト
+            monsterData, // 表示したいデータ
+            R.layout.list_item, // リストのレイアウト
+            arrayOf("image","name"), // 表示するデータのキー
+            intArrayOf(R.id.itemImage, R.id.itemText)// 表示する場所
         )
 
         // リストにAdapterを設定
@@ -46,12 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         // リストを押した時の処理
         list.setOnItemClickListener{ parent, view, position, id ->
-            val currentData = fruits[position]
-            Toast.makeText(
-                this,
-                currentData,
-                Toast.LENGTH_SHORT
-            ).show()
+
         }
     }
 }
