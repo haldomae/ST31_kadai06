@@ -26,24 +26,32 @@ class MainActivity : AppCompatActivity() {
 
         // 表示するデータ
         val monsterData = arrayListOf(
-            mapOf("name" to "モンスター1",
-                "image" to R.drawable.img1,
-                "from" to "HAL東京30F"),
-            mapOf("name" to "モンスター2",
-                "image" to R.drawable.img2,
-                "from" to "HAL東京29F"),
-            mapOf("name" to "モンスター3",
-                "image" to R.drawable.img3,
-                "from" to "HAL東京28F"),
-            mapOf("name" to "モンスター4",
-                "image" to R.drawable.img4,
-                "from" to "HAL東京27F"),
-            mapOf("name" to "モンスター5",
-                "image" to R.drawable.img5,
-                "from" to "HAL東京26F"),
-            mapOf("name" to "モンスター6",
-                "image" to R.drawable.img6,
-                "from" to "HAL東京25F"),
+            MonsterData(
+                "モンスター1",
+                R.drawable.img1,
+                "HAL東京30F"),
+            MonsterData(
+                "モンスター2",
+                R.drawable.img2,
+                "HAL東京29F"),
+            MonsterData(
+                "モンスター3",
+                R.drawable.img3,
+                "HAL東京28F"),
+            MonsterData(
+                "モンスター4",
+                R.drawable.img4,
+                "HAL東京27F"),
+            MonsterData(
+                "モンスター5",
+                R.drawable.img5,
+                "HAL東京26F"),
+            MonsterData(
+                "モンスター6",
+                R.drawable.img6,
+                "HAL東京25F"),
+
+
         )
 
         // Adapter
@@ -53,12 +61,17 @@ class MainActivity : AppCompatActivity() {
 //            android.R.layout.simple_list_item_1, // 項目のレイアウト
 //            fruits // 表示するデータ
 //        )
-        val adapter = SimpleAdapter(
-            this, // コンテキスト
-            monsterData, // 表示したいデータ
-            R.layout.list_item, // リストのレイアウト
-            arrayOf("image","name", "from"), // 表示するデータのキー
-            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)// 表示する場所
+//        val adapter = SimpleAdapter(
+//            this, // コンテキスト
+//            monsterData, // 表示したいデータ
+//            R.layout.list_item, // リストのレイアウト
+//            arrayOf("image","name", "from"), // 表示するデータのキー
+//            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)// 表示する場所
+//        )
+
+        val adapter = CustomAdapter(
+            this,
+            monsterData
         )
 
         // リストにAdapterを設定
