@@ -3,6 +3,7 @@ package com.classnumber_00_domaekazuki.st31_kadai06
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -42,5 +43,15 @@ class MainActivity : AppCompatActivity() {
 
         // リストにAdapterを設定
         list.adapter = adapter
+
+        // リストを押した時の処理
+        list.setOnItemClickListener{ parent, view, position, id ->
+            val currentData = fruits[position]
+            Toast.makeText(
+                this,
+                currentData,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
