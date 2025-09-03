@@ -27,17 +27,23 @@ class MainActivity : AppCompatActivity() {
         // 表示するデータ
         val monsterData = arrayListOf(
             mapOf("name" to "モンスター1",
-                "image" to R.drawable.img1),
+                "image" to R.drawable.img1,
+                "from" to "HAL東京30F"),
             mapOf("name" to "モンスター2",
-                "image" to R.drawable.img2),
+                "image" to R.drawable.img2,
+                "from" to "HAL東京29F"),
             mapOf("name" to "モンスター3",
-                "image" to R.drawable.img3),
+                "image" to R.drawable.img3,
+                "from" to "HAL東京28F"),
             mapOf("name" to "モンスター4",
-                "image" to R.drawable.img4),
+                "image" to R.drawable.img4,
+                "from" to "HAL東京27F"),
             mapOf("name" to "モンスター5",
-                "image" to R.drawable.img5),
+                "image" to R.drawable.img5,
+                "from" to "HAL東京26F"),
             mapOf("name" to "モンスター6",
-                "image" to R.drawable.img6),
+                "image" to R.drawable.img6,
+                "from" to "HAL東京25F"),
         )
 
         // Adapter
@@ -51,8 +57,8 @@ class MainActivity : AppCompatActivity() {
             this, // コンテキスト
             monsterData, // 表示したいデータ
             R.layout.list_item, // リストのレイアウト
-            arrayOf("image","name"), // 表示するデータのキー
-            intArrayOf(R.id.itemImage, R.id.itemText)// 表示する場所
+            arrayOf("image","name", "from"), // 表示するデータのキー
+            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)// 表示する場所
         )
 
         // リストにAdapterを設定
