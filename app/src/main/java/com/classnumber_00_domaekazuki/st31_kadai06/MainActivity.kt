@@ -28,14 +28,20 @@ class MainActivity : AppCompatActivity() {
         // val listView: ListView = findViewById(R.id.listView)
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
+        // Repositoryの初期化
+        // データベースアクセス用のRepositoryを作成
+        val databaseRepository = DatabaseRepository(this)
+
+        val monstersData = databaseRepository.getAllData()
+
         // 果物データのリストを作成（Map形式）
-        val ListData = arrayListOf(
-            ListData("モンスター1", R.drawable.img1,"HAL東京30F"),
-            ListData("モンスター2", R.drawable.img2,"HAL東京29F"),
-            ListData("モンスター3", R.drawable.img3,"HAL東京28F"),
-            ListData("モンスター4", R.drawable.img4,"HAL東京27F"),
-            ListData("モンスター5", R.drawable.img5,"HAL東京26F"),
-        )
+//        val ListData = arrayListOf(
+//            ListData("モンスター1", R.drawable.img1,"HAL東京30F"),
+//            ListData("モンスター2", R.drawable.img2,"HAL東京29F"),
+//            ListData("モンスター3", R.drawable.img3,"HAL東京28F"),
+//            ListData("モンスター4", R.drawable.img4,"HAL東京27F"),
+//            ListData("モンスター5", R.drawable.img5,"HAL東京26F"),
+//        )
         /*
         // ArrayAdapterを作成
         val adapter = SimpleAdapter(
@@ -71,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // アダプターの設定
-        val adapter = RecyclerAdapter(this, ListData)
+        val adapter = RecyclerAdapter(this, monstersData)
         recyclerView.adapter = adapter
 
         adapter.onItemClickListener = {
