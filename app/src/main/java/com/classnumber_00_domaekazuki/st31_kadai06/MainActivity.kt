@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // ListViewの取得
-        val list: ListView = findViewById(R.id.listview)
+        // val list: ListView = findViewById(R.id.listview)
+
+        // RecyclerViewを取得
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
         // 表示するデータ
         val monsterData = arrayListOf(
@@ -69,17 +74,27 @@ class MainActivity : AppCompatActivity() {
 //            intArrayOf(R.id.itemImage, R.id.itemText, R.id.itemText2)// 表示する場所
 //        )
 
-        val adapter = CustomAdapter(
-            this,
-            monsterData
-        )
+//        val adapter = CustomAdapter(
+//            this,
+//            monsterData
+//        )
+
+        // LayoutManagerの設定
+        // RecyclerViewではLayoutManagerは必須
+        // LayoutManagerは「どのような項目の配置にするか」を決める
+        // LinearLayoutManagerは縦か横に項目を配置する
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        // Adapterの設定
+        val adapter = RecyclerAdapter(this, monsterData)
 
         // リストにAdapterを設定
-        list.adapter = adapter
+//        list.adapter = adapter
+        recyclerView.adapter = adapter
 
         // リストを押した時の処理
-        list.setOnItemClickListener{ parent, view, position, id ->
-
-        }
+//        list.setOnItemClickListener{ parent, view, position, id ->
+//
+//        }
     }
 }
