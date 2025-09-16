@@ -220,4 +220,101 @@ class DatabaseRepository(private val context: Context) {
 
         return monsterList
     }
+
+    /**
+     * 指定されたIDのデータを更新するメソッド
+     *
+     * 【処理の流れ】
+     * 1. データベースに接続（書き込み可能）
+     * 2. ContentValuesに新しい値をセット
+     * 3. UPDATE文でデータを更新
+     * 4. 更新された行数を返却
+     * 5. リソースの解放
+     *
+     * @param id 更新対象のID
+     * @param name 新しいモンスター名
+     * @param image 新しい画像名
+     * @param habitat 新しい生息地
+     * @return 更新に成功した場合true、失敗した場合false
+     */
+    fun updateData(id: Long, name: String, image: String, habitat: String): Boolean {
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        var result = false
+
+        try {
+            // 【ContentValuesの準備】
+            val values = ContentValues().apply {
+                put(DatabaseHelper.COLUMN_NAME, name)
+                put(DatabaseHelper.COLUMN_IMAGE, image)
+                put(DatabaseHelper.COLUMN_HABITAT, habitat)
+            }
+
+            // 【UPDATE文の実行】
+            // update()メソッドで既存のレコードを更新
+            // WHERE句でIDを指定して特定のレコードのみ更新
+            val affectedRows = db.update(
+                DatabaseHelper.TABLE_MONSTERS,     // テーブル名
+                values,                            // 更新する値
+                "${DatabaseHelper.COLUMN_ID} = ?", // WHERE句
+                arrayOf(id.toString())             // WHERE句の引数
+            )
+
+            // 【結果の判定】
+            // 1行以上更新されていれば成功
+            result = affectedRows > 0
+
+        } catch (e: Exception) {
+            // エラー処理
+            e.printStackTrace()
+            result = false
+
+        } finally {
+            // 【リソースの解放】
+            db.close()
+        }
+
+        return result
+    }
+    /**
+     * 指定されたIDのデータを削除するメソッド
+     *
+     * 【処理の流れ】
+     * 1. データベースに接続（書き込み可能）
+     * 2. DELETE文で指定IDのレコードを削除
+     * 3. 削除された行数を返却
+     * 4. リソースの解放
+     *
+     * @param id 削除対象のID
+     * @return 削除に成功した場合true、失敗した場合false
+     */
+    fun deleteData(id: Long): Boolean {
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        var result = false
+
+        try {
+            // 【DELETE文の実行】
+            // delete()メソッドで指定したレコードを削除
+            // WHERE句でIDを指定して特定のレコードのみ削除
+            val affectedRows = db.delete(
+                DatabaseHelper.TABLE_MONSTERS,     // テーブル名
+                "${DatabaseHelper.COLUMN_ID} = ?", // WHERE句
+                arrayOf(id.toString())             // WHERE句の引数
+            )
+
+            // 【結果の判定】
+            // 1行以上削除されていれば成功
+            result = affectedRows > 0
+
+        } catch (e: Exception) {
+            // エラー処理
+            e.printStackTrace()
+            result = false
+
+        } finally {
+            // 【リソースの解放】
+            db.close()
+        }
+
+        return result
+    }
 }
