@@ -1,6 +1,7 @@
 package com.classnumber_00_domaekazuki.st31_kadai06
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -27,7 +28,56 @@ class DatabaseRepository(private val context: Context) {
     // SQLiteHelperのインスタンス
     // データベースへの接続・操作を管理
     private val dbHelper: DatabaseHelper = DatabaseHelper(context)
+    /**
+     * 新しいデータを追加するメソッド
+     *
+     * 【処理の流れ】
+     * 1. データベースに接続（書き込み可能）
+     * 2. ContentValuesに値をセット
+     * 3. INSERT文でデータを挿入
+     * 4. 成功可否を返却
+     * 5. リソースの解放
+     *
+     * @param name モンスター名
+     * @param image 画像名（例："img1"）
+     * @param habitat 生息地
+     * @return 追加に成功した場合true、失敗した場合false
+     */
+    fun addData(name: String, image: String, habitat: String): Boolean {
+        // 【データベース接続】
+        // writableDatabase：書き込み可能でDBを開く
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        var result = false
 
+        try {
+            // 【ContentValuesの準備】
+            // INSERT文で挿入するデータを格納するオブジェクト
+            val values = ContentValues().apply {
+                put(DatabaseHelper.COLUMN_NAME, name)
+                put(DatabaseHelper.COLUMN_IMAGE, image)
+                put(DatabaseHelper.COLUMN_HABITAT, habitat)
+            }
+
+            // 【INSERT文の実行】
+            // insert()メソッドで新しいレコードを追加
+            // 戻り値：新しいレコードのID（-1の場合は失敗）
+            val newRowId = db.insert(DatabaseHelper.TABLE_MONSTERS, null, values)
+
+            // 【結果の判定】
+            result = newRowId != -1L
+
+        } catch (e: Exception) {
+            // エラー処理
+            e.printStackTrace()
+            result = false
+
+        } finally {
+            // 【リソースの解放】
+            db.close()
+        }
+
+        return result
+    }
     /**
      * 指定されたIDのデータを取得するメソッド
      *
