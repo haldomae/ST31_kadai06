@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- タイトル入力 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="タスクタイトル"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="例：買い物に行く"
+            android:inputType="text"
+            android:maxLines="1"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp" />
+
+        <!-- 説明入力 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="詳細説明（任意）"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="例：スーパーで野菜と肉を購入"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:gravity="top"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp" />
+
+        <!-- 優先度選択 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="優先度を選択"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/priorityGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/priorityHigh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔴 高優先度"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/priorityMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🟡 中優先度"
+                android:textSize="14sp"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/priorityLow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🟢 低優先度"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</ScrollView>
