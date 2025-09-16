@@ -28,7 +28,67 @@ class DatabaseRepository(private val context: Context) {
     // データベースへの接続・操作を管理
     private val dbHelper: DatabaseHelper = DatabaseHelper(context)
 
+    /**
+     * 指定されたIDのデータを取得するメソッド
+     *
+     * 【処理の流れ】
+     * 1. データベースに接続
+     * 2. SELECT文でIDに該当するデータを取得
+     * 3. CursorからListDataオブジェクトに変換
+     * 4. オブジェクトを返却
+     * 5. リソースの解放
+     *
+     * @param id 取得対象のID
+     * @return 該当するListDataオブジェクト（見つからない場合はnull）
+     */
+    @SuppressLint("Range")
+    fun getDataById(id: Long): ListData? {
+        val db: SQLiteDatabase = dbHelper.readableDatabase
+        var cursor: Cursor? = null
+        var listData: ListData? = null
 
+        try {
+            // 【SELECT文の実行】
+            // IDを指定して特定のレコードを取得
+            cursor = db.query(
+                DatabaseHelper.TABLE_MONSTERS,     // テーブル名
+                null,                              // 取得するカラム（nullは全カラム）
+                "${DatabaseHelper.COLUMN_ID} = ?", // WHERE句
+                arrayOf(id.toString()),            // WHERE句の引数
+                null,                              // GROUP BY句
+                null,                              // HAVING句
+                null                               // ORDER BY句
+            )
+
+            // 【検索結果の処理】
+            if (cursor.moveToFirst()) {
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                val image = cursor.getString(cursor.getColumnIndex("image"))
+                val habitat = cursor.getString(cursor.getColumnIndex("habitat"))
+
+                // 【画像リソースIDの取得】
+                val imageResourceId = context.resources.getIdentifier(
+                    image,
+                    "drawable",
+                    context.packageName
+                )
+
+                // 【ListDataオブジェクトの作成】
+                listData = ListData(name, imageResourceId, habitat)
+            }
+
+        } catch (e: Exception) {
+            // エラー処理
+            e.printStackTrace()
+
+        } finally {
+            // 【リソースの解放】
+            cursor?.close()
+            db.close()
+        }
+
+        return listData
+    }
     /**
      * 全てのデータを取得するメソッド
      *
