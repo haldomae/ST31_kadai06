@@ -29,35 +29,41 @@ class MainActivity : AppCompatActivity() {
         // RecyclerViewを取得
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
+        // リポジトリを初期化
+        val databaseRepository = DatabaseRepository(this)
+
+        // データ全件取得
+        val monsterData = databaseRepository.getAllData()
+
         // 表示するデータ
-        val monsterData = arrayListOf(
-            MonsterData(
-                "モンスター1",
-                R.drawable.img1,
-                "HAL東京30F"),
-            MonsterData(
-                "モンスター2",
-                R.drawable.img2,
-                "HAL東京29F"),
-            MonsterData(
-                "モンスター3",
-                R.drawable.img3,
-                "HAL東京28F"),
-            MonsterData(
-                "モンスター4",
-                R.drawable.img4,
-                "HAL東京27F"),
-            MonsterData(
-                "モンスター5",
-                R.drawable.img5,
-                "HAL東京26F"),
-            MonsterData(
-                "モンスター6",
-                R.drawable.img6,
-                "HAL東京25F"),
-
-
-        )
+//        val monsterData = arrayListOf(
+//            MonsterData(
+//                "モンスター1",
+//                R.drawable.img1,
+//                "HAL東京30F"),
+//            MonsterData(
+//                "モンスター2",
+//                R.drawable.img2,
+//                "HAL東京29F"),
+//            MonsterData(
+//                "モンスター3",
+//                R.drawable.img3,
+//                "HAL東京28F"),
+//            MonsterData(
+//                "モンスター4",
+//                R.drawable.img4,
+//                "HAL東京27F"),
+//            MonsterData(
+//                "モンスター5",
+//                R.drawable.img5,
+//                "HAL東京26F"),
+//            MonsterData(
+//                "モンスター6",
+//                R.drawable.img6,
+//                "HAL東京25F"),
+//
+//
+//        )
 
         // Adapter
         // Adapterはリストとデータを仲介してくれるもの
