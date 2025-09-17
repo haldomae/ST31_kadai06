@@ -11,6 +11,55 @@ class DatabaseRepository(private val context: Context) {
     // SQLiteHelperのインスタンスを作成
     private val dbHelper: DatabaseHelper = DatabaseHelper(context)
 
+    // 指定されたデータ取得のメソッド
+    @SuppressLint("Range")
+    fun getDataById(id: Long): MonsterData?{
+        // DB接続
+        val db: SQLiteDatabase = dbHelper.readableDatabase
+        // cursorを初期化
+        var cursor: Cursor? = null
+
+        // 取得するデータを入れる変数
+        var monsterData: MonsterData? = null
+        try {
+            // データ取得
+            cursor = db.query(
+                DatabaseHelper.TABLE_NAME,
+                null,
+                "${DatabaseHelper.COLUMN_ID} = ?",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+            if(cursor.moveToFirst()){
+                val name = cursor.getString(cursor.getColumnIndex("name"))
+                val image = cursor.getString(cursor.getColumnIndex("image"))
+                val habitat = cursor.getString(cursor.getColumnIndex("habitat"))
+
+                // 画像リソースIDの取得
+                val imageResourceId = context.resources.getIdentifier(
+                    image,
+                    "drawable",
+                    context.packageName
+                )
+                monsterData = MonsterData(
+                    name,
+                    imageResourceId,
+                    habitat
+                )
+            }
+        }catch (e: Exception) {
+            throw e
+        }finally {
+            // リソースの解放
+            cursor?.close()
+            db.close()
+        }
+        return monsterData
+    }
+
+
     // 全てのデータ取得のメソッド
     @SuppressLint("Range")
     fun getAllData(): ArrayList<MonsterData>{
