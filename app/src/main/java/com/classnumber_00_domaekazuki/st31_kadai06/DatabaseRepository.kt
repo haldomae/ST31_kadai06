@@ -153,4 +153,30 @@ class DatabaseRepository(private val context: Context) {
         }
         return monsterList
     }
+
+    // データの更新
+    fun updateData(id: Long, name: String, image: String, habitat: String): Boolean{
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        var result = false
+        try {
+            val values = ContentValues().apply {
+                put(DatabaseHelper.TABLE_NAME, name)
+                put(DatabaseHelper.COLUMN_IMAGE, image)
+                put(DatabaseHelper.COLUMN_HABITAT, habitat)
+            }
+           db.update(
+               DatabaseHelper.TABLE_NAME,
+               values,
+               "${DatabaseHelper.COLUMN_ID} = ?",
+               arrayOf(id.toString())
+           )
+            result = true
+        }catch (e: Exception){
+            throw e
+            result = false
+        } finally {
+            db.close()
+        }
+        return result
+    }
 }
