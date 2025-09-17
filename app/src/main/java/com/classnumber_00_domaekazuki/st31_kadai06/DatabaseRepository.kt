@@ -1,6 +1,7 @@
 package com.classnumber_00_domaekazuki.st31_kadai06
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -10,6 +11,35 @@ import android.database.sqlite.SQLiteDatabase
 class DatabaseRepository(private val context: Context) {
     // SQLiteHelperのインスタンスを作成
     private val dbHelper: DatabaseHelper = DatabaseHelper(context)
+
+    // データ追加
+    fun addData(name: String, image: String, habitat: String): Boolean{
+        // 書き込み可能なDBを使用
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        // 処理成功可否フラグ
+        var result = false
+        try {
+            // ContentValueの準備
+            // INSERTする場合はオブジェクトにしなければいけない
+            val value = ContentValues().apply {
+                put(DatabaseHelper.DATABASE_NAME, name)
+                put(DatabaseHelper.COLUMN_IMAGE, image)
+                put(DatabaseHelper.COLUMN_HABITAT, habitat)
+            }
+
+            // INSERTを実行
+            db.insert(DatabaseHelper.TABLE_NAME, null, value)
+
+            // 成功したフラグに変更
+            result = true
+        }catch (e: Exception){
+            throw e
+            result = false
+        }finally {
+            db.close()
+        }
+        return result
+    }
 
     // 指定されたデータ取得のメソッド
     @SuppressLint("Range")
